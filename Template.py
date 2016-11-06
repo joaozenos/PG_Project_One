@@ -1,4 +1,3 @@
-#flake8:noqa
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -18,7 +17,6 @@ vetores = []
 index = 0
 point_size = 13.0
 
-
 PROMPT = ("F1 - Polygons On/Off","F2 - Control Points On/Off","F3 - Params(t) points On/Off","F5 - Reload Screen","Left Click - Insert Point", "Right Click - Remove Point")
 
 ESC = '\x1b'
@@ -30,6 +28,7 @@ poligonal = True
 control = True
 params = True
 
+
 def reset():
     global pontos
 
@@ -37,6 +36,7 @@ def reset():
     mathutil.curvatureK = []
     curvature = []
     glutPostRedisplay()
+
 
 def display():
     global vetores
@@ -66,14 +66,13 @@ def display():
 
         if len(pontos) > 1:
 
-            # Desenha as linhas entre os pontos de cntrole
+            # Desenha as linhas entre os pontos de controle
             glBegin(GL_LINE_STRIP)
             glColor3f(0.0,1.0,0.0)
             if poligonal == True:
                 for p in pontos:
                     glVertex2f(p['x'], p['y'])
             glEnd()
-
 
             # Desenha a Curva
             glBegin(GL_LINE_STRIP)
@@ -98,6 +97,7 @@ def display():
 
     glFlush()
 
+
 def reshape (width, height):
     glViewport(0, 0, width, height)
     glMatrixMode(GL_PROJECTION)
@@ -105,6 +105,7 @@ def reshape (width, height):
     glOrtho(0.0, window_w, window_h, 0.0, -5.0, 5.0)
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
+
 
 def hadleKeyboard(*args):
     global castel
@@ -114,6 +115,7 @@ def hadleKeyboard(*args):
     elif args[0] == 'c':
         castel = True
         glutPostRedisplay()
+
 
 def hadleSpecialKeyboard(key, x, y):
     global poligonal, control, params
@@ -142,20 +144,21 @@ def hadleSpecialKeyboard(key, x, y):
         print "Reloading"
         reset()
 
+
 def handleMouseClick(button, state, x, y):
     global index
     exist = False
     vector_size = len(pontos)
 
-    #Verifica se o ponto existe
+    # Verifica se o ponto existe
     for p in range(0,vector_size): 
-        if ((x >= pontos[p]['x'] - point_size/2) and (x <= pontos[p]['x'] + point_size/2)):
-            if ((y >= pontos[p]['y'] - point_size/2) and (y <= pontos[p]['y'] + point_size/2)):
+        if (x >= pontos[p]['x'] - point_size/2) and (x <= pontos[p]['x'] + point_size/2):
+            if (y >= pontos[p]['y'] - point_size/2) and (y <= pontos[p]['y'] + point_size/2):
                 exist = True
                 index = p
                 break
     
-    #adiciona pontos
+    # Adiciona pontos
     if button == GLUT_LEFT_BUTTON:
         if state == GLUT_DOWN and exist == False:
             p = {'x':float(x),'y':float(y)}
@@ -163,32 +166,33 @@ def handleMouseClick(button, state, x, y):
             index = len(pontos)-1
             glutPostRedisplay()
 
-    #deleta pontos
+    # Deleta pontos
     elif button == GLUT_RIGHT_BUTTON:
         if state == GLUT_DOWN and exist == True:
             pontos.pop(0 + index)
             glutPostRedisplay()
 
-#movimentacao dos pontos 
+
+# movimentacao dos pontos
 def move_point(x, y):
     global index
     pontos[index]['x'] = x
     pontos[index]['y'] = y 
     glutPostRedisplay()
 
+
 def main():
 
     glutInit()
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB)
     glutInitWindowSize(window_w,window_h)
     glutInitWindowPosition(0, 0)
     glutCreateWindow("PG - Project 1")
 
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glClearColor(0.0, 0.0, 0.0, 0.0)
     glLineWidth(3.0)
     glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity();
-
+    glLoadIdentity()
 
     # Starting settings
     glutDisplayFunc(display)
@@ -198,6 +202,4 @@ def main():
     glutKeyboardFunc(hadleKeyboard)
     glutSpecialUpFunc(hadleSpecialKeyboard)
     glutMainLoop()
-    window(window_wG,window_hG)
-
-    
+    window(window_wG, window_hG)

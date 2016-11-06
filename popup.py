@@ -3,7 +3,8 @@ from Tkinter import *
 factor = 0
 master = Tk()
 
-#classe utilizada par alancar popup para o usuario inserir o parametro t
+
+# Classe utilizada par alancar popup para o usuario inserir o parametro t
 def popup(master):
     global e
 
@@ -14,6 +15,7 @@ def popup(master):
     b=Button(master,text='Ok',command=clean)
     b.pack()
 
+
 def clean():
     global factor
     global master 
@@ -21,7 +23,8 @@ def clean():
     factor = float(factor) 
     master.destroy()
 
+
 def start():
     global master
-    m = popup(master)
+    popup(master)
     master.mainloop()
